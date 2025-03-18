@@ -1,0 +1,81 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+//Fixes if a letter is put inside a code
+
+bool nonintegerfix(double &input) {
+	// Check if the input is valid
+	if (cin.fail()) {
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << "\n" << endl;
+		return false; // If the input is not correct
+	}
+	return true; // Return true if the input is correct
+}
+
+// Function for grabbing the inputs and computating windchill and cloudbase
+void inputvariables(double & Fah, double &windspeed, double &dewpoint, double &computedWindchill, double &computedCloudbase) {
+	// Your temperature should be inputed as degrees Fahrenheit
+	cout << "\n input the Temperature in degrees Fah: ";
+	cin >> Fah;
+
+	// Use the function that aren't integers to fix and correct invalid numeric values
+	while (!nonintegerfix(Fah)) {
+		cout << "     Please enter a valid temperature (an integer, you're not required to place a unit): ";
+		cin >> Fah;
+	}
+
+	// Your windspeed shoud be inputed as miles per hour
+	cout << "\ninput your windspeed in miles per hour: ";
+	cin >> windspeed;
+
+//Uses the function again
+
+	while (!nonintegerfix(windspeed)) {
+		cout << "     Please enter a valid wind speed (an integer, you're not required to place a unit): ";
+		cin >> windspeed;
+	}
+
+	// Your dew point should be inputed as degrees Fahrenheit
+	cout << "\ninput your dew point in degrees Fahrenheit: ";
+	cin >> dewpoint;
+
+//Uses the function again
+
+	while (!nonintegerfix(dewpoint)) {
+		cout << "     Please enter a valid temperature (an integer, you're not required to place a unit): " << endl;
+		cout << "\n     ";
+		cin >> dewpoint;
+	}
+
+	// determine windchill and cloudbase
+	computedWindchill = 35.74 + ((0.6215 * Fah) - (35.75 * (pow(windspeed, 0.16)))) + (0.4275 * Fah * (pow(windspeed, 0.16)));
+	computedCloudbase = ((Fah - dewpoint) / 4.4) * 1000;
+}
+
+// Function for displaying the data table
+void thetable(double fahrenheit, double windspeed, double dewpoint, double computedWindchill, double computedCloudbase) {
+	cout << "\n\n                         Data Table                      " << endl;
+	cout << "                                                             " << endl;
+	cout << "     Windspeed : " << windspeed << " Miles Per Hour              \n" << endl;
+	cout << "     Temperature : " << fahrenheit << " Degrees Fah\n" << endl;
+	cout << "     Dewpoint : " << dewpoint << " Degrees Fah\n" << endl;
+	cout << "     Windchill (calculated) : " << computedWindchill << " Degrees Fah\n" << endl;
+	cout << "     Cloudbase (calculated) : " << computedCloudbase << " Feet\n" << endl;
+}
+
+int main() {
+	// stated variables
+	double Fah, windspeed, dewpoint, computedWindchill, computedCloudbase;
+
+	//The function shall be called upon to input data and determine the results
+	inputvariables(Fah, windspeed, dewpoint, computedWindchill, computedCloudbase);
+
+	// Call the table function to display the come outs
+	thetable(Fah, windspeed, dewpoint, computedWindchill, computedCloudbase);
+
+	return 0;
+}
