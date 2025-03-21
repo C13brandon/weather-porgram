@@ -8,84 +8,104 @@ using namespace std;
 bool nonintegerfix(double &input);
 
 // Function for grabbing the inputs and computating windchill and cloudbase
-void inputvariables(double & Fah, double &windspeed, double &dewpoint, double &computedWindchill, double &computedCloudbase);
+void inputvariables(double & Fah, double &windspeed, double &dewpoint );
+
+
+double computed_Windchill (double & Fah, double& windspeed, double & computedWindchill); //compute Windchill function
+
+double computed_Cloudbase (double & Fah, double & dewpoint, double & computedCloudbase); // compute cloudbase function
+
 
 // Function for displaying the data table
-void thetable(double fahrenheit, double windspeed, double dewpoint, double computedWindchill, double computedCloudbase);
+void thetable(double Fah, double windspeed, double dewpoint, double computedWindchill, double computedCloudbase);
 
 
 
 int main() {
 // stated variables
-double Fah, windspeed, dewpoint, computedWindchill, computedCloudbase;
+	double Fah, windspeed, dewpoint, computedWindchill, computedCloudbase;
 
 //The function shall be called upon to input data and determine the results
-inputvariables(Fah, windspeed, dewpoint, computedWindchill, computedCloudbase);
+	inputvariables(Fah, windspeed, dewpoint);
 
+	computed_Windchill (Fah, windspeed, computedWindchill); //compute Windchill function
+
+	computed_Cloudbase (Fah, dewpoint, computedCloudbase); // compute cloudbase function
+	
 // Call the table function to display the come outs
-thetable(Fah, windspeed, dewpoint, computedWindchill, computedCloudbase);
+	thetable(Fah, windspeed, dewpoint, computedWindchill, computedCloudbase);
 
-return 0;
+	return 0;
 }
 
 
 bool nonintegerfix(double &input) {
 // Check if the input is valid
-if (cin.fail()) {
-cin.clear();
-cin.ignore(10000, '\n');
-cout << "\n" << endl;
-return false; // If the input is not correct
-}
-return true; // Return true if the input is correct
+	if (cin.fail()) {
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cout << "\n" << endl;
+		return false; // If the input is not correct
+	}
+	return true; // Return true if the input is correct
 }
 // Function for grabbing the inputs and computating windchill and cloudbase
-void inputvariables(double & Fah, double &windspeed, double &dewpoint, double &computedWindchill, double &computedCloudbase) {
+void inputvariables(double & Fah, double &windspeed, double &dewpoint) {
 // Your temperature should be inputed as degrees Fahrenheit
-cout << "\n input the Temperature in degrees Fah: ";
-cin >> Fah;
+	cout << "\n input the Temperature in degrees Fah: ";
+	cin >> Fah;
 
 // Use the function that aren't integers to fix and correct invalid numeric values
-while (!nonintegerfix(Fah)) {
-cout << "     Please enter a valid temperature (an integer, you're not required to place a unit): ";
-cin >> Fah;
-}
+	while (!nonintegerfix(Fah)) {
+		cout << "     Please enter a valid temperature (an integer, you're not required to place a unit): ";
+		cin >> Fah;
+	}
 
 // Your windspeed shoud be inputed as miles per hour
-cout << "\ninput your windspeed in miles per hour: ";
-cin >> windspeed;
+	cout << "\ninput your windspeed in miles per hour: ";
+	cin >> windspeed;
 
 //Uses the function again
 
-while (!nonintegerfix(windspeed)) {
-cout << "     Please enter a valid wind speed (an integer, you're not required to place a unit): ";
-cin >> windspeed;
-}
+	while (!nonintegerfix(windspeed)) {
+		cout << "     Please enter a valid wind speed (an integer, you're not required to place a unit): ";
+		cin >> windspeed;
+	}
 
 // Your dew point should be inputed as degrees Fahrenheit
-cout << "\ninput your dew point in degrees Fahrenheit: ";
-cin >> dewpoint;
+	cout << "\ninput your dew point in degrees Fahrenheit: ";
+	cin >> dewpoint;
 
 //Uses the function again
 
-while (!nonintegerfix(dewpoint)) {
-cout << "     Please enter a valid temperature (an integer, you're not required to place a unit): " << endl;
-cout << "\n     ";
-cin >> dewpoint;
-}
-
-// determine windchill and cloudbase
-computedWindchill = 35.74 + ((0.6215 * Fah) - (35.75 * (pow(windspeed, 0.16)))) + (0.4275 * Fah * (pow(windspeed, 0.16)));
-computedCloudbase = ((Fah - dewpoint) / 4.4) * 1000;
+	while (!nonintegerfix(dewpoint)) {
+		cout << "     Please enter a valid temperature (an integer, you're not required to place a unit): " << endl;
+		cout << "\n     ";
+		cin >> dewpoint;
+	}
 }
 
 // Function for displaying the data table
-void thetable(double fahrenheit, double windspeed, double dewpoint, double computedWindchill, double computedCloudbase) {
-cout << "\n\n                         Data Table                      " << endl;
-cout << "                                                             " << endl;
-cout << "     Windspeed : " << windspeed << " Miles Per Hour              \n" << endl;
-cout << "     Temperature : " << fahrenheit << " Degrees Fah\n" << endl;
-cout << "     Dewpoint : " << dewpoint << " Degrees Fah\n" << endl;
-cout << "     Windchill (calculated) : " << computedWindchill << " Degrees Fah\n" << endl;
-cout << "     Cloudbase (calculated) : " << computedCloudbase << " Feet\n" << endl;
-}
+	void thetable(double Fah, double windspeed, double dewpoint, double computedWindchill, double computedCloudbase) {
+		cout << "\n\n                         Data Table                      " << endl;
+		cout << "                                                             " << endl;
+		cout << "     Windspeed : " << windspeed << " Miles Per Hour              \n" << endl;
+		cout << "     Temperature : " << Fah << " Degrees Fah\n" << endl;
+		cout << "     Dewpoint : " << dewpoint << " Degrees Fah\n" << endl;
+		cout << "     Windchill (calculated) : " << computedWindchill << " Degrees Fah\n" << endl;
+		cout << "     Cloudbase (calculated) : " << computedCloudbase << " Feet\n" << endl;
+	}
+
+	double computed_Windchill (double & Fah, double& windspeed,double & computedWindchill) {
+
+		computedWindchill = 35.74 + ((0.6215 * Fah) - (35.75 * (pow(windspeed, 0.16)))) + (0.4275 * Fah * (pow(windspeed, 0.16)));
+
+        return 0;
+	}
+
+	double computed_Cloudbase (double & Fah, double & dewpoint, double & computedCloudbase) {
+
+		computedCloudbase = ((Fah - dewpoint) / 4.4) * 1000;
+
+        return 0;
+	}
